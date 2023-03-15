@@ -1,0 +1,50 @@
+from art import logo 
+from art import vs
+import random
+from game_data import data
+
+def new_value():
+  raw_data = random.choice(data)
+  new_list = raw_data.values()
+  new_value = list(new_list)
+  return new_value
+
+def check_number(guess, a_number, b_number):
+  if a_number > b_number: 
+    return guess == "a"
+  else:
+    return guess == "b"
+  
+def game():
+  print(logo)
+  subject_a = new_value()
+  subject_b = new_value()
+
+  game_end = False   
+  score = 0 
+  while not game_end:
+    subject_a = subject_b
+    subject_b = new_value()
+  
+    while subject_a == subject_b:
+      subject_b = new_value()
+   
+      print(f"Compare A: {subject_a[0]}, a(n) {subject_a[2]}, from {subject_a[1]}. ")  
+      print(vs)
+      print(f"Compare B: {subject_b[0]}, a(n) {subject_b[2]}, from {subject_b[1]}. ")
+      
+      guess = input("Who has more followers? Type 'A' or 'B'. ").lower()
+      a_number = subject_a[1]
+      b_number = subject_b[1]
+      correct_answer = check_number(guess, a_number, b_number)
+
+      clear()
+      print(logo)
+      if correct_answer:
+        score += 1
+        print(f"Correct! Your score: {score}.")
+      else:
+        game_end = True
+        print(f"You lose! Your score: {score}.")
+    
+game()
